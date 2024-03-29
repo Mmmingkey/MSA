@@ -11,5 +11,5 @@ eureka:
 #    instance-id: ${spring.cloud.client.hostname}:${spring.application.instance_id:${random.value}}
     instance-id: ${eureka.instance.hostname}:${spring.application.instance_id:${random.value}}
   client:
-    register-with-eureka: true # eureka ??? ???? t/f
-    fetch-registry: true # ??????? server ??? ??? ? t/f (30??? ?????? ???? ??)
+    register-with-eureka: true # eureka 서버에 등록할지 t/f
+    fetch-registry: true # 레지스트리에서 server 정보를 캐싱할 지 t/f (30초마다 레지스트리에 서버정보 저장)
