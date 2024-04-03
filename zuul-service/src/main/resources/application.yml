@@ -9,8 +9,8 @@ zuul:
   routes:
     first-service:
       path: /first-service/**
-      url: http://127.0.0.1:8082
+      url: http://127.0.0.1:8081
     second-service:
       path: /second-service/**
-      url: http://127.0.0.1:8081
+      url: http://127.0.0.1:8082
 
