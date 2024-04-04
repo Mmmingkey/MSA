@@ -24,4 +24,9 @@ public class FirstServiceController {
         log.info(response.getHeader("first-response"));
         return "FIRST SERVER REQUEST HEADER"+header;
     }
+
+    @GetMapping("/check")
+    public String check(){
+        return "Hi, there. This is a message from First Service";
+    }
 }
