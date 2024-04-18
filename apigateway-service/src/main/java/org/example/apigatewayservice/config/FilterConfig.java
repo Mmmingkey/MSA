@@ -4,6 +4,7 @@ import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.server.reactive.ServerHttpRequest;
 
 //@Configuration
 public class FilterConfig {
@@ -19,5 +20,8 @@ public class FilterConfig {
                                                 .addResponseHeader("second-response","second-response-header"))
                                 .uri("http://127.0.0.1:8082/"))
                 .build();
+    }
+    public static void main(String... args){
+        ServerHttpRequest eq = null;
     }
 }
