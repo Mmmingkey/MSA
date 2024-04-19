@@ -13,6 +13,16 @@ spring:
             preLogger: true
             postLogger: true
       routes:
+        - id: user-service
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/user-service/**
+
+        - id: catalog-service
+          uri: lb://CATALOG-SERVICE
+          predicates:
+            - Path=/catalog-service/**
+
         - id: first-service
           #uri: http://127.0.0.1:8081/
           uri: lb://FIRST-SERVICE
@@ -22,6 +32,7 @@ spring:
 #              - AddRequestHeader=first-request, first-requests-header2
 #              - AddResponseHeader=first-response, first-response-header2
             - name: CustomFilter
+
         - id: second-service
           #uri: http://127.0.0.1:8082/
           uri: lb://SECOND-SERVICE

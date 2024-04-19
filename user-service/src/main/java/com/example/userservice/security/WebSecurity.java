@@ -26,7 +26,7 @@ public class WebSecurity {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests( request -> request
-                        .requestMatchers("/users/**").permitAll()
+                        .requestMatchers("/user-service/**").permitAll()
                         .requestMatchers("/h2-console/**").permitAll())
                 .headers( header -> header
                         .frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
