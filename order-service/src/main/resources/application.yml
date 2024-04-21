@@ -1,6 +1,9 @@
+server:
+  port: 0
+
 spring:
   application:
-    name: catalog-service
+    name: order-service
   h2:
     console:
       enabled: true
@@ -9,7 +12,7 @@ spring:
       path: /h2-console
   datasource:
     driver-class-name: org.h2.Driver
-    url: jdbc:h2:~/test
+    url: jdbc:h2:~/test #TODO ????? ??, ??????  ??? ?? deadlock ?????
     username: sa
   jpa:
     properties:
@@ -18,26 +21,16 @@ spring:
         format_sql: true
         use_sql_comments: true
         hbm2ddl:
-          auto: create-drop
-          dialect: org.hibernate.dialect.H2Dialect
+          auto: update
+        dialect: org.hibernate.dialect.H2Dialect
     database-platform: org.hibernate.dialect.H2Dialect
-    defer-datasource-initialization: true #defer datasource initializationdl true지정
-  sql:
-    init:
-      mode: always # sql.init.mode를 always로 지정 resources/data.sql 의 쿼리문을 h2 db내에서 실행시킴
-
-server:
-  port: 0
 
 eureka:
   instance:
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
   client:
-    register-with-eureka: true
-    fetch-registry: true
+    register-with-eureka: true # eureka ??? ???? t/f
+    fetch-registry: true # ??????? server ??? ??? ? t/f (30??? ?????? ???? ??)
     service-url:
       defaultZone: http://127.0.0.1:8761/eureka
 
-logging:
-  level:
-    root: DEBUG

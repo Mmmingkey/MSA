@@ -26,8 +26,7 @@ public class CustomFilter extends AbstractGatewayFilterFactory<CustomFilter.Conf
         return (exchange, chain) -> {
             //Netty의 비동기 기반의 request/response
             //Spring MVC에 사용하는 HttpServletRequest/Response는
-            // 내부에 in/outputStream을 사용중인데
-            // 해당 객체는 동기방식, 즉 비동기방식을 지원안함
+            // 내부에 in/outputStream을 사용중인데, 이는 동기방식, 즉 비동기방식을 지원안함
             ServerHttpRequest request = exchange.getRequest();
             ServerHttpResponse response = exchange.getResponse();
 

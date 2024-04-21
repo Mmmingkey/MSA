@@ -12,14 +12,14 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class CatalogServiceImpl implements CatalogService{
 
-    private final CatalogRepository repository;
+    private final CatalogRepository catalogRepository;
     @Override
     public Iterable<CatalogEntity> getAllCatalogs() {
-        return repository.findAll();
+        return catalogRepository.findAll();
     }
 
     @Override
     public CatalogEntity getCatalogByProductId(String id) {
-        return repository.findByProductId(id);
+        return catalogRepository.findByProductId(id);
     }
 }
