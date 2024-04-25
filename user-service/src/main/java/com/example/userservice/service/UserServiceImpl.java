@@ -22,6 +22,17 @@ public class UserServiceImpl implements UserService{
     private final BCryptPasswordEncoder passwordEncoder;
 
     @Override
+    public UserDto getUserByUsername(String username) {
+        UserEntity entity = userRepository.findByEmail(username);
+
+        if(entity == null){
+            throw new UsernameNotFoundException(username);
+        }
+
+        return new ModelMapper().map(entity, UserDto.class);
+    }
+
+    @Override
     public Long createUser(UserDto userDto) {
         userDto.setUserId(UUID.randomUUID().toString());
 

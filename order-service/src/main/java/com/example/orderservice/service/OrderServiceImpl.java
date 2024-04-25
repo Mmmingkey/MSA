@@ -26,8 +26,7 @@ public class OrderServiceImpl implements OrderService{
 
         orderRepository.save(orderEntity);
 
-        OrderDto returnVal = mapper.map(orderEntity, OrderDto.class);
-        return returnVal;
+        return mapper.map(orderEntity, OrderDto.class);
     }
     @Override
     public OrderDto getOrderByOrderId(String orderid) {
