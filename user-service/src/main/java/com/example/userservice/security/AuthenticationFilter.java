@@ -19,13 +19,16 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import java.io.IOException;
 import java.util.ArrayList;
 
-@AllArgsConstructor
 public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private final UserService userService;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
-    private final Environment evn;
+    private final Environment env;
 
+    public AuthenticationFilter(AuthenticationManager manager, UserService userService, Environment env){
+        super(manager);
+        this.userService = userService;
+        this.env = env;
+    }
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request,
                                                 HttpServletResponse response) throws AuthenticationException {

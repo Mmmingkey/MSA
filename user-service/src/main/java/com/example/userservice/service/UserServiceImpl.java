@@ -7,6 +7,8 @@ import com.example.userservice.vo.ResponseOrder;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -21,16 +23,6 @@ public class UserServiceImpl implements UserService{
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
-    @Override
-    public UserDto getUserByUsername(String username) {
-        UserEntity entity = userRepository.findByEmail(username);
-
-        if(entity == null){
-            throw new UsernameNotFoundException(username);
-        }
-
-        return new ModelMapper().map(entity, UserDto.class);
-    }
 
     @Override
     public Long createUser(UserDto userDto) {
@@ -44,6 +36,30 @@ public class UserServiceImpl implements UserService{
         userRepository.save(userEntity);
 
         return userEntity.getId();
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        UserEntity entity = userRepository.findByEmail(username);
+
+        if(entity == null){
+            throw new UsernameNotFoundException(username);
+        }
+
+        return new User(entity.getEmail(), entity.getEncryptedPwd(),
+                true, true, true, true,
+                new ArrayList<>());
+    }
+
+    @Override
+    public UserDto getUserDetailsByEmail(String username) {
+        UserEntity entity = userRepository.findByEmail(username);
+
+        if(entity == null){
+            throw new UsernameNotFoundException(username);
+        }
+
+        return new ModelMapper().map(entity, UserDto.class);
     }
 
     @Override
