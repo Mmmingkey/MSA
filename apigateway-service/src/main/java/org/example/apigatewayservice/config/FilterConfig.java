@@ -22,7 +22,4 @@ public class FilterConfig {
                                 .uri("http://127.0.0.1:8082/"))
                 .build();
     }
-    public static void main(String... args){
-        ServerHttpRequest eq = null;
-    }
 }
