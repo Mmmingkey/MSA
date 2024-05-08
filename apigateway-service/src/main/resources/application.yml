@@ -47,7 +47,7 @@ spring:
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/user-service/(?<segment>.*), /$\{segment}
-
+            - name: AuthorizationHeaderFilter
 
         - id: catalog-service
           uri: lb://CATALOG-SERVICE
@@ -92,3 +92,7 @@ eureka:
 #logging:
 #  level:
 #    root: debug
+
+token:
+  # token 암호화 키값
+  secret: user_token
