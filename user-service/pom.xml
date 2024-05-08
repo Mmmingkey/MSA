@@ -63,12 +63,28 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
-
+        <!-- modelMapper dependency -->
         <dependency>
             <groupId>org.modelmapper</groupId>
             <artifactId>modelmapper</artifactId>
             <version>2.3.8</version>
         </dependency>
+
+        <!-- jwt(json web token) dependency-->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.9.1</version>
+        </dependency>
+
+        <!-- jwt에서 signWith 메소드 내부에 Base64 Decoding하기 위해 Base64Codec.class에서 decode 메소드를 실행하는데
+            여기서 DatatypeConverter 클래스를 사용함 이를 위해 javax.xml.bind dependency 추가 -->
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>2.3.1</version>
+        </dependency>
+
         <!-- lombok dependency -->
         <dependency>
             <groupId>org.projectlombok</groupId>

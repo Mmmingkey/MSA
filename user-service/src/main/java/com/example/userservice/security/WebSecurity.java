@@ -43,11 +43,7 @@ public class WebSecurity {
              authorizeHttpRequests에서 antMatchers가 requestMatchers로 변경된것으로 추정됨.
          */
 
-        AuthenticationManagerBuilder authenticationManagerBuilder =
-                http.getSharedObject(AuthenticationManagerBuilder.class);
-        authenticationManagerBuilder.userDetailsService(userService).passwordEncoder(bCryptPasswordEncoder);
-
-        AuthenticationManager authenticationManager = authenticationManagerBuilder.build();
+        AuthenticationManager authenticationManager = this.AuthManagerSetting(http).build();
 
         // spring boot 3.0 이상 spring security 5.4 이상은 security 작성 시 람다식 권장
         return http
@@ -76,5 +72,13 @@ public class WebSecurity {
 
     private AuthorizationDecision hasIpAddress(Supplier<Authentication> authentication, RequestAuthorizationContext object) {
         return new AuthorizationDecision(IP_ADDRESS.matches(object.getRequest().getRemoteAddr()));
+    }
+
+    private AuthenticationManagerBuilder AuthManagerSetting(HttpSecurity http) throws Exception {
+        AuthenticationManagerBuilder authenticationManagerBuilder =
+                http.getSharedObject(AuthenticationManagerBuilder.class);
+        authenticationManagerBuilder.userDetailsService(userService).passwordEncoder(bCryptPasswordEncoder);
+
+        return authenticationManagerBuilder;
     }
 }

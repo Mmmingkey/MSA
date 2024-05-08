@@ -43,3 +43,9 @@ greeting:
 logging:
   level:
     root: DEBUG
+
+token:
+  # token 유효시간 (ms 단위)
+  expiration_time: 86400000
+  # token 암호화 키값
+  secret: user_token
