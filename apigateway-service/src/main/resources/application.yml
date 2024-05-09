@@ -38,6 +38,16 @@ spring:
             - RemoveRequestHeader=Cookie
             - RewritePath=/user-service/(?<segment>.*), /$\{segment}
 
+        # user-service -> actuator 요청
+        - id: user-service
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/user-service/actuator/**
+            - Method=GET, POST
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+
         # user-service -> users 요청
         - id: user-service
           uri: lb://USER-SERVICE
@@ -48,6 +58,7 @@ spring:
             - RemoveRequestHeader=Cookie
             - RewritePath=/user-service/(?<segment>.*), /$\{segment}
             - name: AuthorizationHeaderFilter
+
 
         - id: catalog-service
           uri: lb://CATALOG-SERVICE
@@ -93,6 +104,8 @@ eureka:
 #  level:
 #    root: debug
 
-token:
-  # token 암호화 키값
-  secret: user_token
+management:
+  endpoints:
+    web:
+      exposure:
+        include: info, health, refresh, httpexchanges
