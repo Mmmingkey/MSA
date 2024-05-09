@@ -1,22 +1,18 @@
 package com.example.userservice.security;
 
 import com.example.userservice.service.UserService;
-import jakarta.servlet.Filter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authorization.AuthorizationDecision;
-import org.springframework.security.authorization.AuthorizationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.intercept.RequestAuthorizationContext;
@@ -50,22 +46,19 @@ public class WebSecurity {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests( authorize ->
                         authorize
-                                .requestMatchers("/**").access(this::hasIpAddress)
-                                .requestMatchers("/h2-console/**").permitAll())
+                                .requestMatchers("/actuator/**").permitAll()
+                                .requestMatchers("/h2-console/**").permitAll()
+                                .requestMatchers("/**").access(this::hasIpAddress))
                 .authenticationManager(authenticationManager)
                 .headers( header -> header
                         .frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
-                .addFilter(getAuthentionFilter(authenticationManager))
+                .addFilter(getAuthenticationFilter(authenticationManager))
                 .getOrBuild();
 
 
     }
 
-    private AuthenticationFilter getAuthentionFilter(AuthenticationManager authenticationManager) {
-//        AuthenticationFilter authenticationFilter = new AuthenticationFilter(userService, bCryptPasswordEncoder, evn);
-        // TODO authenticationManager 이게 맞는지 다시 확인
-//        authenticationFilter.setAuthenticationManager(authenticationFilter.getAuthenticationManager());
-//        return authenticationFilter;
+    private AuthenticationFilter getAuthenticationFilter(AuthenticationManager authenticationManager) {
         return new AuthenticationFilter(authenticationManager, userService, env);
     }
 
