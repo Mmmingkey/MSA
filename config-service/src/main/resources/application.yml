@@ -2,10 +2,15 @@ server:
   port: 8888
 
 spring:
+  config:
+    import:
+    - file:D:\account.yml
   application:
     name: config-service
   cloud:
     config:
       server:
         git:
-          uri: file://D:\git-local-repo #pc? ???? git ????? ?? ?????
+          uri: https://github.com/Mmmingkey/spring-cloud-config
+          username: ${account.email}
+          password: ${account.password}
